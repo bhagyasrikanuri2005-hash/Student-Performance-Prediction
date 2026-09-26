@@ -6,9 +6,9 @@ A Machine Learning web application that predicts a student's academic result bas
 
 ## 📌 Project Overview
 
-Student Performance Predictor is a Flask-based Machine Learning application designed to estimate whether a student is likely to **PASS or FAIL** based on selected academic inputs.
+Student Performance Predictor is a Flask-based Machine Learning web application that predicts whether a student is likely to **PASS or FAIL** based on academic inputs such as **Study Time, G1 (First Period Grade), and G2 (Second Period Grade)**.
 
-The application uses a trained Machine Learning classification model to generate the prediction and displays the result through a simple and user-friendly web interface.
+The project treats the task as a **Binary Classification** problem and uses **Logistic Regression** to generate the prediction. The trained model is integrated with a simple and responsive Flask web interface, allowing users to enter student details and receive a real-time performance prediction.
 
 ## ✨ Features
 
