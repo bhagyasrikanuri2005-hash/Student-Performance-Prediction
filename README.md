@@ -1,4 +1,6 @@
-# 🎓 Student Performance Predictor
+# Student Performance Prediction
+
+🔗 **Live Demo:** [Student Performance Predictor](https://student-performance-prediction-lajy.onrender.com)
 
 A Machine Learning web application that predicts a student's academic result based on study time and previous period grades.
 
