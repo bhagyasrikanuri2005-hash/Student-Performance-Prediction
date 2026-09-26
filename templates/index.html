@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Pass / Fail Predictor</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Student Performance Predictor</h1>
+
+        <p class="subtitle">
+            Enter a few academic details to predict the result.
+        </p>
+
+        <form id="predictionForm">
+
+            <label for="studytime">Study Time</label>
+
+            <select id="studytime" required>
+                <option value="">Select study time</option>
+                <option value="1">Less than 2 hours/week</option>
+                <option value="2">2–5 hours/week</option>
+                <option value="3">5–10 hours/week</option>
+                <option value="4">More than 10 hours/week</option>
+            </select>
+
+            <label for="g1">First Period Grade (G1)</label>
+
+            <input
+                type="number"
+                id="g1"
+                min="0"
+                max="20"
+                placeholder="Enter G1 (0-20)"
+                required
+            >
+
+            <label for="g2">Second Period Grade (G2)</label>
+
+            <input
+                type="number"
+                id="g2"
+                min="0"
+                max="20"
+                placeholder="Enter G2 (0-20)"
+                required
+            >
+
+            <button type="submit">
+                Predict Result
+            </button>
+
+        </form>
+
+        <div id="result">
+            Result will appear here
+        </div>
+
+    </div>
+
+
+    <script>
+
+        document.getElementById("predictionForm").addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+                const studytime =
+                    Number(document.getElementById("studytime").value);
+
+                const g1 =
+                    Number(document.getElementById("g1").value);
+
+                const g2 =
+                    Number(document.getElementById("g2").value);
+
+                const resultBox =
+                    document.getElementById("result");
+
+                resultBox.innerHTML = "Predicting...";
+                resultBox.className = "";
+
+                try {
+
+                    const response = await fetch("/predict", {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            studytime: studytime,
+                            G1: g1,
+                            G2: g2
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.result === "PASS") {
+
+                        resultBox.innerHTML =
+                            "Result: PASS ✅";
+
+                        resultBox.className = "pass";
+
+                    } else {
+
+                        resultBox.innerHTML =
+                            "Result: FAIL ❌";
+
+                        resultBox.className = "fail";
+                    }
+
+                } catch (error) {
+
+                    resultBox.innerHTML =
+                        "Error connecting to prediction model.";
+
+                    resultBox.className = "error";
+
+                    console.error(error);
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
